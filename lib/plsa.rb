@@ -28,30 +28,44 @@ class PLSA
   private
   
   def e_step
-    all_z.each do |z|
-      observation.projects.each do |project|
-        observation.users.each do |user|
-          p_z_pu[[z, project, user]] =
-            (p_z[z] * p_p_z[[project, z]] * p_u_z[[user, z]]) /
-            all_z.inject(0.0) { |t, _z| t + p_z[_z] * p_p_z[[project, _z]] * p_u_z[[user, _z]] }
+    for z in all_z
+      for project in observation.projects
+        for user in observation.users
+          t = 0.0
+          for _z in all_z
+            t += p_z[_z] * p_p_z[[project, _z]] * p_u_z[[user, _z]]
+          end
+          p_z_pu[[z, project, user]] = (p_z[z] * p_p_z[[project, z]] * p_u_z[[user, z]]) / t
         end
       end
     end
   end
   
   def m_step
-    all_z.each do |z|
-      observation.projects.each do |project|
-        p_p_z[[project, z]] = observation.users.inject(0.0) { |t, _user| t + observation.o(project, _user) * p_z_pu[[z, project, _user]] }
+    for z in all_z
+      for project in observation.projects
+        t = 0.0
+        for user in observation.users
+          t += observation.o(project, user) * p_z_pu[[z, project, user]]
+        end
+        p_p_z[[project, z]] = t
       end
-      observation.users.each do |user|
-        p_u_z[[user, z]] = observation.projects.inject(0.0) { |t, _project| t + observation.o(_project, user) * p_z_pu[[z, _project, user]] }
+      
+      for user in observation.users
+        t = 0.0
+        for project in observation.projects
+          t += observation.o(project, user) * p_z_pu[[z, project, user]]
+        end
+        p_u_z[[user, z]] = t
       end
-      p_z[z] = observation.projects.inject(0.0) do |p_total, project|
-        p_total + observation.users.inject(0.0) do |u_total, user|
-          u_total + observation.o(project, user) * p_z_pu[[z, project, user]]
+      
+      t = 0.0
+      for project in observation.projects
+        for user in observation.users
+          t += observation.o(project, user) * p_z_pu[[z, project, user]]
         end
       end
+      p_z[z] = t
     end
   end
 end
