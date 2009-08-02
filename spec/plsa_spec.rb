@@ -5,7 +5,7 @@ describe "PLSA" do
     observation = Observation.new
     observation.assimilate(fixture('data.txt'))
     
-    plsa = PLSA.new(observation, :topics => 2, :iterations => 10)
+    plsa = PLSA.new(observation, :topics => 4, :max_iterations => 20)
     plsa.run
   end
 end

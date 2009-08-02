@@ -1,5 +1,5 @@
 $:.unshift File.expand_path('../../lib', __FILE__)
-require 'observations'
+require 'observation'
 require 'plsa'
 
 require 'rubygems' rescue nil
