@@ -1,9 +1,10 @@
 class PLSA
   E = 0.01
   
-  attr_accessor :observation
+  attr_accessor :observation, :max_iterations
+  attr_accessor :all_z
   attr_accessor :p_z_pu, :p_p_z, :p_u_z, :p_z
-  attr_accessor :max_iterations, :all_z
+  attr_accessor :last_likelihood
   
   def initialize(observation, options={})
     @observation = observation
@@ -46,6 +47,26 @@ class PLSA
       end
     end
     t
+  end
+  
+  def to_a
+    [
+      @all_z,
+      @p_z_pu.without_default, @p_p_z.without_default, @p_u_z.without_default, @p_z.without_default,
+      @last_likelihood
+    ]
+  end
+  
+  def dump(filename)
+    File.open(filename, 'w') do |file|
+      Marshal.dump(to_a, file)
+    end
+  end
+  
+  def load(filename)
+    File.open(filename, 'r') do |file|
+      @all_z, @p_z_pu, @p_p_z, @p_u_z, @p_z, @last_likelihood = Marshal.load(file)
+    end
   end
   
   private
