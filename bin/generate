@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
-output_path = File.expand_path('results.txt', Dir.pwd)
-File.open(output_path, 'w') do |file|
-end
+$:.unshift File.expand_path('../../lib', __FILE__)
+require 'observation'
+require 'plsa'
+require 'hash'
