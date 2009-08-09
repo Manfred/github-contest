@@ -1,5 +1,12 @@
 require File.expand_path('../start', __FILE__)
 
+describe "Observation" do
+  it "should read observations from file" do
+    observation = Observation.read(fixture('data.txt'))
+    observation.length.should == 5
+  end
+end
+
 describe "A newly created observation" do
   it "should have zero length" do
     Observation.new.length.should.be.zero

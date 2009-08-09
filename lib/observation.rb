@@ -30,4 +30,10 @@ class Observation
   def o(project, user)
     @co_occurrence[[project, user]]
   end
+  
+  def self.read(filename)
+    observation = new
+    observation.assimilate(filename)
+    observation
+  end
 end
