@@ -1,1 +1,17 @@
 GITHUB CONTEST
+
+My approach uses a widely publicized probabilistic version of LSA, combined with a variant of the Hellinger distance to generate a value for a recommendation.
+
+CONSIDERATIONS
+
+PLSA has a few problems, namely overfitting and the fact that it's not a very good generative model for new data (eg. a new user). Both these disadvantages won't be a problem in the contest because we have a fixed dataset. In the future I might take a stab at latent Dirichlet allocation and compare the results on this dataset.
+
+The contest ranking is created by looking at the recall of the algorithm and not the precision. I would definately not recommend using this code in production because even though it might have a reasonable score in a synthetic environment, it might not perform very well in the real world.
+
+When creating an actual recommendation system for GitHub I would like to include user feedback on the recommendations so supervised learning can be used to train the models.
+
+LICENSE
+
+The code is released under the same conditions as Nethack. For more details about these conditions see the LICENSE file. Please contact me if you want to use the code under different conditions.
+
+Github-contest entry © 2009, Manfred Stienstra
