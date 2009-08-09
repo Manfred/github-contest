@@ -1,6 +1,15 @@
 #!/usr/bin/env ruby
 
 $:.unshift File.expand_path('../../lib', __FILE__)
+require 'recommender'
 require 'observation'
+require 'users'
 require 'plsa'
 require 'hash'
+
+recommender = Recommender.run(
+  :data_file    => File.expand_path('../../test/examples/001/data.txt', __FILE__),
+  :users_file   => File.expand_path('../../test/examples/001/test.txt', __FILE__),
+  :results_file => File.expand_path('../../results.txt', __FILE__)
+)
+recommender.write_to_file

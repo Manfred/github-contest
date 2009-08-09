@@ -49,6 +49,18 @@ class PLSA
     t
   end
   
+  def p_u(user)
+    p_u = 0.0; for z in all_z
+      p_u += p_u_z[[user, z]]
+    end; p_u
+  end
+  
+  def p_p(project)
+    p_p = 0.0; for z in all_z
+      p_p += p_p_z[[project, z]]
+    end; p_p
+  end
+  
   def to_a
     [
       @all_z,

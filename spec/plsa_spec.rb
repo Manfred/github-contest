@@ -18,19 +18,14 @@ describe "PLSA" do
 end
 
 describe "A PLSA" do
+  before { Tempfiles.prepare! }
+  after  { Tempfiles.cleanup! }
+  
   before do
     @observation = Observation.new
     @observation.assimilate(fixture('data.txt'))
     @plsa = PLSA.new(@observation, :topics => 4, :max_iterations => 4)
     @plsa.run
-  end
-  
-  before do
-    Tempfiles.prepare!
-  end
-  
-  after do
-    Tempfiles.cleanup!
   end
   
   it "should dump its probabilistic network to disk" do
